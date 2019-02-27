@@ -21,6 +21,17 @@ def read_file(filename):
         fh.close()
 
 def write_file(filename, data):
+    """
+    writes to a file
+    
+    writes the provided data to the given file path, creates file if it doesn't exist
+    
+    :param filename: path to the file
+    :type filename: String
+    :param data: compressed data to be written
+    :type data: bytes object
+    """
+
     fh = open(filename, "w+")
     try:
         fh.write(data)
