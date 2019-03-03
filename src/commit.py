@@ -37,7 +37,7 @@ def get_local_master_hash():
     :rtype: SHA-1 string
     """
 
-    master_path = os.path.join('.git', 'refs', 'heads', 'master')
+    master_path = os.path.join('.pygit', 'refs', 'heads', 'master')
     try:
         return read_file(master_path).decode().strip()
     except FileNotFoundError:
@@ -83,7 +83,7 @@ def commit(message, author=None):
     lines.append('')
     data = '\n'.join(lines).encode()
     sha1 = hash_object(data, 'commit')
-    master_path = os.path.join('.git', 'refs', 'heads', 'master')
+    master_path = os.path.join('.pygit', 'refs', 'heads', 'master')
     write_file(master_path, (sha1 + '\n').encode())
     print('committed to master : {:7}'.format(sha1))
     return sha1

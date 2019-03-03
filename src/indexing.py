@@ -12,10 +12,10 @@ import operator
 from . import read_file, write_file
 from .objects import hash_object, read_object
 
-# Data for one entry in the git index (.git/index)
+# Data for one entry in the git index (.pygit/index)
 IndexEntry = collections.namedtuple('IndexEntry', [
     'ctime_s', 'ctime_n', 'mtime_s', 'mtime_n', 'dev', 'ino', 'mode', 'uid',
-    'gid', 'size', 'sha1', ''
+    'gid', 'size', 'sha1', 'flags', 'path'
 ])
 
 def read_index():
@@ -26,7 +26,7 @@ def read_index():
     
     """
     try:
-        data = read_file(os.path.join(".git", 'index'))
+        data = read_file(os.path.join(".pygit", 'index'))
     except FileNotFoundError:
         return []
 
@@ -74,7 +74,7 @@ def get_status():
     """
     paths = set()
     for root, dirs, files in os.walk('.'):
-        dirs[:] = [d for d in dirs if d != '.git']
+        dirs[:] = [d for d in dirs if d != '.pygit']
         for file in files:
             path = os.path.join(root,file)
             path = path.replace('\\', '/')
@@ -156,7 +156,7 @@ def write_index(entries):
     header = struct.pack('!4sLL', b'DIRC', len(entries))
     all_data = header + b''.join(packed_entries)
     digest = hashlib.sha1(all_data).digest()
-    write_file(os.path.join('.git', 'index'), all_data + digest)
+    write_file(os.path.join('.pygit', 'index'), all_data + digest)
 
 def add(paths):
     paths = [p.replace('\\', '/') for p in paths]

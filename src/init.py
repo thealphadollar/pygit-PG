@@ -19,8 +19,8 @@ def init(repo):
         os.mkdir(repo)
         os.mkdir(os.path.join(repo, ".pygit"))
         for name in ['objects', 'refs', 'refs/heads']:
-            os.mkdir(os.path.join(repo, ".git", name))
-        write_file(os.path.join(repo, '.git', 'HEAD'), b'ref: refs/heads/master')
-        print('initialized empty repository: %s', repo)
+            os.mkdir(os.path.join(repo, ".pygit", name))
+        write_file(os.path.join(repo, '.pygit', 'HEAD'), b'ref: refs/heads/master')
+        print('initialized empty repository:', repo)
     except FileExistsError as _:
-        print('directory with name %s already exists', repo)
+        print('directory with name {} already exists'.format(repo))

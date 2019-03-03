@@ -32,7 +32,7 @@ def write_file(filename, data):
     :type data: bytes object
     """
 
-    fh = open(filename, "w+")
+    fh = open(filename, "wb+")
     try:
         fh.write(data)
     except FileExistsError as err:

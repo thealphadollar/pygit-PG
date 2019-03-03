@@ -29,7 +29,7 @@ def hash_object(data, obj_type, write=True):
     full_data = header + b'\x00' + data
     sha1 = hashlib.sha1(full_data).hexdigest()
     if write:
-        path = os.path.join('.git', 'objects', sha1[:2], sha1[2:])
+        path = os.path.join('.pygit', 'objects', sha1[:2], sha1[2:])
         if not os.path.exists(path):
             os.makedirs(os.path.dirname(path), exist_ok=True)
             write_file(path, zlib.compress(full_data))
@@ -47,7 +47,7 @@ def find_object(sha1_prefix):
     """
     if len(sha1_prefix)<2:
         raise ValueError('hash prefix must be greater than 2 characters')
-    obj_dir = os.path.join('.git', 'objects', sha1_prefix[:2])
+    obj_dir = os.path.join('.pygit', 'objects', sha1_prefix[:2])
     rest = sha1_prefix[2:]
     objects = [name for name in os.listdir(obj_dir) if name.startswith(rest)]
     if not objects:
